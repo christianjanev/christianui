@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
-using EventHandler = std::function<void(const SDL_Event&)>;
+typedef std::function<void(const SDL_Event&)> EventHandler;
 
 class CUWindow {
     public:
@@ -18,8 +18,8 @@ class CUWindow {
         SDL_Renderer* getRenderer();
         void setPosition(int x, int y);
         void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
-        void registerHandler(Uint32 eventType, EventHandler handler);
-        void dispatchEvent(const SDL_Event& event);
+        void registerHandler(EventType eventType, EventHandler handler);
+        void dispatchEvent(const Event& event);
     private:
         SDL_Window* m_window{};
         SDL_Renderer* m_renderer{};

@@ -1,7 +1,7 @@
 #include "../include/CUWindow.h"
 
 CUWindow::CUWindow(int w, int h) : m_window() {
-    m_window = SDL_CreateWindow("Joe", w, h, SDL_WINDOW_RESIZABLE);
+    m_window = SDL_CreateWindow("My App", w, h, SDL_WINDOW_RESIZABLE);
 
     if (!m_window)
         std::cerr << "Window creation failed. Error code " << ErrorCode::WINDOW_CREATE_FAIL << ". " << SDL_GetError() << "\n";
@@ -12,7 +12,6 @@ CUWindow::CUWindow(int w, int h) : m_window() {
 }
 
 CUWindow::~CUWindow() {
-    std::cout << "Destructor\n";
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
 }
@@ -35,11 +34,11 @@ void CUWindow::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
     SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
 }
 
-void CUWindow::registerHandler(Uint32 eventType, EventHandler handler) {
+void CUWindow::registerHandler(EventType eventType, EventHandler handler) {
     handlers[eventType].push_back(handler);
 }
 
-void CUWindow::dispatchEvent(const SDL_Event& event) {
+void CUWindow::dispatchEvent(const Event& event) {
     auto it = handlers.find(event.type);
     if (it != handlers.end()) {
         for (const auto& handler : it->second) {
